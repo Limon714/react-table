@@ -2,37 +2,58 @@ import React from 'react'
 import { Center, Heading, Spinner, Table, Tbody, Td, Th, Thead, Tr, Image, Button } from '@chakra-ui/react';
 import { useState, useEffect, useMemo } from "react";
 import axios from 'axios';
-import { useTable } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 
 const url = "https://fakestoreapi.com/products";
 
 
 const tableColumn = [
   {
-    Header: "ID",
-    accessor: "id",
-  },
-  {
-    Header: "Title",
-    accessor: "title",
-  },
-  {
-    Header: "Image",
-    accessor: "image",
-    Cell: ({ row }) => <Image src={row.values.image} h={50} />,
-  },
-  {
-    Header: "Price",
-    accessor: "price",
-    Cell: ({ row }) => `$ ${row.values.price}`,
+    Header : "Not Yet Changed",
+    columns: [
+      {
+        Header: "ID",
+        accessor: "id",
+      },
+      {
+        Header: "Title",
+        accessor: "title",
+      },
+      {
+        Header: "Catagory",
+        accessor: "category",
+      },
+      
+      
+    ],
   },
 
   {
-    Header: "Action",
-    Cell: ({ row }) => (
-      <Button size="sm" onClick={() => alert(`$ ${row.values.price}`)}>Show Price</Button>
-    ),
+    Header : "Changed",
+    columns: [
+      {
+        Header: "Image",
+        accessor: "image",
+        Cell: ({ row }) => <Image src={row.values.image} h={50} />,
+      },
+      {
+        Header: "Price",
+        accessor: "price",
+        Cell: ({ row }) => `$${row.values.price}`,
+      },
+
+      {
+        Header: "Action",
+        Cell: ({ row }) => (
+          <Button size="sm" onClick={() => alert(`$ ${row.values.price}`)}>
+            Show Price
+          </Button>
+        ),
+      },
+    ],
   },
+
+  
 ];
 
 const ReactTable = () => {
@@ -44,7 +65,7 @@ const ReactTable = () => {
     const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable({
        columns,
        data
-    })
+    }, useSortBy)
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -75,8 +96,11 @@ const ReactTable = () => {
             {headerGroups.map((headerGroup) => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                    <Th {...column.getHeaderProps()}>
-                        {column.render("Header")}
+                    <Th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                    
+                    {column.isSorted ? (column.isSortedDesc ? "👎" : "👍") : ""}
+                    {}
                   </Th>
                 ))}
               </Tr>
