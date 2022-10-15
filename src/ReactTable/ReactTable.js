@@ -96,10 +96,10 @@ const ReactTable = () => {
             {headerGroups.map((headerGroup) => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                    <Th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <Th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                    
-                    {column.isSorted ? (column.isSortedDesc ? "👎" : "👍") : ""}
+
+                    {column.isSorted ? (column.isSortedDesc ? "🔽" : "🔼") : ""}
                     {}
                   </Th>
                 ))}
@@ -107,18 +107,16 @@ const ReactTable = () => {
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-                      {rows.map((row, i) => {
-                          prepareRow(row)
-               return (
-                 <Tr {...row.getRowProps()}>
-                   {row.cells.map((cell) => (
-                     <Td {...cell.getCellProps()}>
-                       {cell.render("Cell")}
-                     </Td>
-                   ))}
-                 </Tr>
-               );
-           })}
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <Tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => (
+                    <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
+                  ))}
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </div>
@@ -126,4 +124,5 @@ const ReactTable = () => {
   );
 }
 
-export default ReactTable
+export default ReactTable 
+ 
