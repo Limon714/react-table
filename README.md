@@ -13,3 +13,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 # Description 
 ## React Table using React js, Chakra-ui, Axios and more. 
+
+# API 
+ https://fakestoreapi.com/products
